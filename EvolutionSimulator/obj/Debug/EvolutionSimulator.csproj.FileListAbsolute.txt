@@ -1,0 +1,19 @@
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\obj\Debug\EvolutionSimulator.csprojResolveAssemblyReference.cache
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\obj\Debug\EvolutionSimulator.Interface.resources
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\obj\Debug\EvolutionSimulator.Properties.Resources.resources
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\obj\Debug\EvolutionSimulator.csproj.GenerateResource.Cache
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\bin\Debug\EvolutionSimulator.exe.config
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\bin\Debug\EvolutionSimulator.exe
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\bin\Debug\EvolutionSimulator.pdb
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\obj\Debug\EvolutionSimulator.exe
+e:\desktop\Projects\EvolutionSimulator\EvolutionSimulator\obj\Debug\EvolutionSimulator.pdb
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\bin\Debug\EvolutionSimulator.exe.config
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\bin\Debug\EvolutionSimulator.exe
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\bin\Debug\EvolutionSimulator.pdb
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\obj\Debug\EvolutionSimulator.csprojAssemblyReference.cache
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\obj\Debug\EvolutionSimulator.Interface.resources
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\obj\Debug\EvolutionSimulator.Properties.Resources.resources
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\obj\Debug\EvolutionSimulator.csproj.GenerateResource.cache
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\obj\Debug\EvolutionSimulator.csproj.CoreCompileInputs.cache
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\obj\Debug\EvolutionSimulator.exe
+E:\Desktop\Personal Projects\_Coding\sermer-EvolutionSim\EvolutionSimulator\obj\Debug\EvolutionSimulator.pdb
