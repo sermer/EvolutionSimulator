@@ -4,33 +4,133 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EvolutionSimulator
+namespace EvolutionSimulator.Organisms
 {
-    class Brain
+    public class DNA
     {
-        //Handle decision making here
-        public static OrganismStats Move(OrganismStats org)
+        //DNA is determined by the parents and impacts the organisms abilities
+        private float maxHealth;
+        private float lifeExpectancy;
+        private float maxSize;
+        private float maxEnergy;
+        private float defense;
+        private float attack;
+        private float moveStat;
+        private float averageChildren;
+        private float intelligence;
+
+        //energy collection(how does it eat?)
+        private float chemicalAbsorption;
+        private float photosynthesis;
+        private float digestiveAbility;
+        public DNA()
         {
-            return org;
-        } 
-        public static OrganismStats Mutate(OrganismStats org)
+            MaxHealth = 0;
+            LifeExpectancy = 0;
+            MaxSize = 0;
+            MaxEnergy = 0;
+            Defense = 0;
+            Attack = 0;
+            MoveStat = 0;
+            AverageChildren = 0;
+            Intelligence = 0;
+            ChemicalAbsorption = 0;
+            Photosynthesis = 0;
+            DigestiveAbility = 0;
+        }
+
+        public float MaxHealth
         {
+            get { return maxHealth; }
+            set { maxHealth = value; }
+        }
+        public float LifeExpectancy
+        {
+            get { return lifeExpectancy; }
+            set { lifeExpectancy = value; }
+        }
+
+
+        public float MaxSize
+        {
+            get { return maxSize; }
+            set { maxSize = value; }
+        }
+
+        public float MaxEnergy
+        {
+            get { return maxEnergy; }
+            set { maxEnergy = value; }
+        }
+
+        public float Defense
+        {
+            get { return defense; }
+            set { defense = value; }
+        }
+
+        public float Attack
+        {
+            get { return attack; }
+            set { attack = value; }
+        }
+
+        public float MoveStat
+        {
+            get { return moveStat; }
+            set { moveStat = value; }
+        }
+
+        public float AverageChildren
+        {
+            get { return averageChildren; }
+            set { averageChildren = value; }
+        }
+
+        public float Intelligence
+        {
+            get { return intelligence; }
+            set { intelligence = value; }
+        }
+
+        //energy collection
+        public float ChemicalAbsorption
+        {
+            get { return chemicalAbsorption; }
+            set { chemicalAbsorption = value; }
+        }
+
+        public float Photosynthesis
+        {
+            get { return photosynthesis; }
+            set { photosynthesis = value; }
+        }
+
+        public float DigestiveAbility
+        {
+            get { return digestiveAbility; }
+            set { digestiveAbility = value; }
+        }
+
+        private void Mutate(Organism org)
+        {
+            //Should mutations be allowed to happen at random or only during breeding?
+
             Random random = new Random();
             float chance = random.Next(0, 480);
             //~75% chance of no change, equal chance of other changes. 50% up, 50% down
-            //
-            if (chance < 10)
+            /*if (chance < 10)
             {
-                if(chance < 5)
+                if (chance < 5)
                 {
-                    org.MaxHealth += 1;
+                    org.dna.MaxHealth += 1;
                 }
                 else
                 {
                     org.MaxHealth -= 1;
                 }
             }
-            else if(chance < 20)
+            else if (chance < 20)
             {
                 if (chance < 15)
                 {
@@ -150,9 +250,7 @@ namespace EvolutionSimulator
                 {
                     org.DigestiveAbility -= 1;
                 }
-            }
-
-            return org;
+            }*/
         }
     }
 }

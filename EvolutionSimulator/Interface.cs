@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EvolutionSimulator.Analysis;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace EvolutionSimulator
 {
     public partial class Interface : Form
     {
-        List<OrganismStats> OrganismList = new List<OrganismStats>();
+        List<Organism> OrganismList = new List<Organism>();
         public Interface()
         {
             InitializeComponent();
@@ -20,28 +21,39 @@ namespace EvolutionSimulator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (EvolutionSimulator.IntitializeVariables.firstDay)
+            if (GlobalVariables.firstDay)
             {
                 //create first, generic creatures
                 int x = 0;
                 while (x < 100)
                 {
-                    OrganismList.Insert(x, OrganismStats.createLife());
+                    //All organisms basically start as primordial soup...
+                    OrganismList.Insert(x, Organism.createLife());
                     x++;
                 }
-                EvolutionSimulator.IntitializeVariables.firstDay = false;
+                GlobalVariables.firstDay = false;
             }
             int i = 0;
-        
+
+            DayCycleHandler dayCycleHandler = new DayCycleHandler();
             while (i < 100)
             {
-                OrganismList = DayCycleHandler.RunDay(OrganismList);
+                
+                OrganismList = dayCycleHandler.RunDay(OrganismList);
                 i++;
             }
-            OrganismStats mom = OrganismStats.createLife();            
-            OrganismStats dad = OrganismStats.createLife();
-            dad.MaxHealth = 20;
-            OrganismStats child = ChildCalculations.BabyTime(mom, dad);
+            Organism mom = Organism.createLife();            
+            Organism dad = Organism.createLife();
+            dad.dna.MaxHealth = 20;
+            Organism child = ChildCalculations.BabyTime(mom, dad);
+
+            AncestryAnalysis.CompareChildToParents(child, mom, dad);
+        }
+
+        private void worldGenButton_Click(object sender, EventArgs e)
+        {
+            GlobalVariables.world = new World.Map();
+            GlobalVariables.world.GenerateWorld(201, 201, 100);
         }
     }
 }

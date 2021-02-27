@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace EvolutionSimulator
 {
-    class IntitializeVariables
+    class GlobalVariables
     {
         public static int day;
         public static double season;
         public static bool firstDay = true;
         public static bool seasonWaxing = true;
+
+        public static World.Map world = new World.Map();
     }
 }
