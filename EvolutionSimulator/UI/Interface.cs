@@ -6,7 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace EvolutionSimulator
@@ -14,11 +14,13 @@ namespace EvolutionSimulator
     public partial class Interface : Form
     {
         List<Organism> OrganismList = new List<Organism>();
-        BackgroundWorker backgroundWorker = new BackgroundWorker();
+        BackgroundWorker backgroundWorker;
         public Interface()
         {
             InitializeComponent();
-            backgroundWorker.WorkerReportsProgress = true;
+            backgroundWorker = new BackgroundWorker();
+
+            backgroundWorker.DoWork += backgroundWorker_DoWork;
             backgroundWorker.WorkerSupportsCancellation = true;
         }
 
@@ -63,6 +65,14 @@ namespace EvolutionSimulator
         {
             if (!backgroundWorker.IsBusy)
             {
+                if (GlobalVariables.world.pixels.Count == 0)
+                {
+                    GlobalVariables.world.GenerateWorld(201, 201, 100);
+                }
+                if(GlobalVariables.livingOrganisms.Count == 0)
+                {
+                    GlobalVariables.livingOrganisms = GlobalVariables.world.SpawnLife();
+                }
                 backgroundWorker.RunWorkerAsync();
             }
             else
@@ -76,7 +86,11 @@ namespace EvolutionSimulator
 
             while (!worker.CancellationPending)
             {
-                //Run time...
+                //Run a day...if it takes too long, have it only run a segment of time.
+                Console.WriteLine("Running");
+                Thread.Sleep(500);
+
+
             }
         }
     }

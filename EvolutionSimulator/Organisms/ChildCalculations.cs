@@ -41,11 +41,11 @@ namespace EvolutionSimulator
             }
 
             //The following attributes are determined by how healthy the parents are
-            child.StoredEnergy = (mom.StoredEnergy + dad.StoredEnergy) / 2;
-            child.MovementBoost = (mom.MovementBoost + dad.MovementBoost) / 2;
+            child.stats.StoredEnergy = (mom.stats.StoredEnergy + dad.stats.StoredEnergy) / 2;
+            child.stats.MovementBoost = (mom.stats.MovementBoost + dad.stats.MovementBoost) / 2;
 
 
-            child.Health = child.dna.MaxHealth;
+            child.stats.Health = child.dna.MaxHealth;
             return child;
         }
     }

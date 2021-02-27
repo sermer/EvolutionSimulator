@@ -13,6 +13,8 @@ namespace EvolutionSimulator
         public static bool firstDay = true;
         public static bool seasonWaxing = true;
 
+        public static List<Organism> livingOrganisms = new List<Organism>();
+
         public static World.Map world = new World.Map();
     }
 }

@@ -47,7 +47,7 @@ namespace EvolutionSimulator
             {
                 //Brain.Mutate(org);
                 
-                Console.WriteLine(day + " " + org.dna.MaxHealth);
+               //Console.WriteLine(day + " " + org.dna.MaxHealth);
                 
             }
             DayPassed();

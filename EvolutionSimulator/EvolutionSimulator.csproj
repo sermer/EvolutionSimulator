@@ -48,22 +48,23 @@
     <Compile Include="Analysis\AncestryAnalysis.cs" />
     <Compile Include="Organisms\ChildCalculations.cs" />
     <Compile Include="Organisms\Brain.cs" />
+    <Compile Include="UI\ImportExport.cs" />
     <Compile Include="World\GlobalVariables.cs" />
     <Compile Include="Organisms\EnergyHandler.cs" />
     <Compile Include="World\DayCycleHandler.cs" />
     <Compile Include="Organisms\DNA.cs" />
     <Compile Include="Organisms\Organism.cs" />
-    <Compile Include="Interface.cs">
+    <Compile Include="UI\Interface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface.Designer.cs">
+    <Compile Include="UI\Interface.Designer.cs">
       <DependentUpon>Interface.cs</DependentUpon>
     </Compile>
-    <Compile Include="InterfaceHandler.cs" />
+    <Compile Include="UI\InterfaceHandler.cs" />
     <Compile Include="Organisms\Stats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="World\Map.cs" />
-    <EmbeddedResource Include="Interface.resx">
+    <EmbeddedResource Include="UI\Interface.resx">
       <DependentUpon>Interface.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

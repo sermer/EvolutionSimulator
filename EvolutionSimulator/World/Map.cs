@@ -31,7 +31,8 @@ namespace EvolutionSimulator.World
             maxZ = zDimension;
 
             pixels = GenerateEmptyMap();
-            MapPixel pixel = AccessPixel(101, 101);
+            
+            /*MapPixel pixel = AccessPixel(101, 101);
             pixel.Type = "O";
 
             for(int y = 0; y < maxY -1; y++)
@@ -42,7 +43,7 @@ namespace EvolutionSimulator.World
                     line+=AccessPixel(x, y).Type;
                 }
                 Console.WriteLine(line);
-            }
+            }*/
             //GenerateVent()
         }
 
@@ -76,9 +77,18 @@ namespace EvolutionSimulator.World
         {
 
         }
+
         public void GenerateCliff(MapPixel centerPixel, Map map)
         {
 
+        }
+
+        public List<Organism> SpawnLife()
+        {
+            //Create the initial primordial soup.
+            //Should be spawned at a vent and each organism should be able to feed off vents.
+            //Starting amount needs to be enough that life always gets a foothold...
+            return new List<Organism>();
         }
     }
 
