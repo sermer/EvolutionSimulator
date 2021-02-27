@@ -14,9 +14,12 @@ namespace EvolutionSimulator
     public partial class Interface : Form
     {
         List<Organism> OrganismList = new List<Organism>();
+        BackgroundWorker backgroundWorker = new BackgroundWorker();
         public Interface()
         {
             InitializeComponent();
+            backgroundWorker.WorkerReportsProgress = true;
+            backgroundWorker.WorkerSupportsCancellation = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -54,6 +57,27 @@ namespace EvolutionSimulator
         {
             GlobalVariables.world = new World.Map();
             GlobalVariables.world.GenerateWorld(201, 201, 100);
+        }
+
+        private void beginButton_Click(object sender, EventArgs e)
+        {
+            if (!backgroundWorker.IsBusy)
+            {
+                backgroundWorker.RunWorkerAsync();
+            }
+            else
+            {
+                backgroundWorker.CancelAsync();
+            }
+        }
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            while (!worker.CancellationPending)
+            {
+                //Run time...
+            }
         }
     }
 }

@@ -11,95 +11,40 @@ namespace EvolutionSimulator
 {
     public class ChildCalculations
     {
-        //strings
-        //uniqueID, 
-
-        //floats
-        //totalHealth, lifeExpectancy, maxSize, maxEnergy, defense, attack, moveStat, averageChildren, intelligence
-        //chemicalAbsorption, photosynthesis, digestiveAbility, health, size, storedEnergy, age, attractiveness, movementBoost
-
-        //ints
-        //xCoordinate, yCoordinate, moveOrder
-
-        //tuples 
-        //parents
-
         public static Organism BabyTime(Organism mom, Organism dad)
         {
             Organism child = new Organism();
             float parentWeight;
             Random random = new Random();
 
-            var orgAttributes = new[] { "LifeExpectancy", "MaxEnergy", "MaxSize", "MaxHealth", "Defense", "Attack", "MoveStat", "AverageChildren", "Intelligence", "ChemicalAbsorption", "Photosynthesis", "DigestiveAbility" };
-
-            for(int i = 0; i < orgAttributes.Length - 1; i++)
+            foreach(PropertyInfo property in child.dna.GetType().GetProperties())
             {
                 try
                 {
-                    parentWeight = random.Next(0, 1);
+                    //50-50 chance genes come from each parent.
+                    parentWeight = random.Next(0, 2);
 
-                    PropertyInfo pi = child.dna.GetType().GetProperty(orgAttributes[i]);
-                    if (parentWeight >= .5)
+                    PropertyInfo pi = child.dna.GetType().GetProperty(property.Name);
+                    if (parentWeight >= 1)
                     {
-                        //Not currently working...
-                        //pi.SetValue(child, 1);
+                        pi.SetValue(child.dna, dad.dna.GetType().GetProperty(property.Name).GetValue(dad.dna));
                     }
                     else
                     {
-                        //pi.SetValue(child, 2);
+                        pi.SetValue(child.dna, mom.dna.GetType().GetProperty(property.Name).GetValue(mom.dna));
                     }
                 }
                 catch
                 {
-                    Console.WriteLine(orgAttributes[i] + " doesn't seem to be an actual attribute. BabyTime()....");
+
                 }
-                
             }
-            parentWeight = random.Next(0, 1);
-            if (parentWeight >= .5)
-            {
-                child.Size = mom.Size;
-            }
-            else
-            {
-                child.Size = dad.Size;
-            }
-            parentWeight = random.Next(0, 1);
-            if (parentWeight >= .5)
-            {
-                child.StoredEnergy = mom.StoredEnergy;
-            }
-            else
-            {
-                child.StoredEnergy = dad.StoredEnergy;
-            }
-            parentWeight = random.Next(0, 1);
-            if (parentWeight >= .5)
-            {
-                child.Attractiveness = mom.Attractiveness;
-            }
-            else
-            {
-                child.Attractiveness = dad.Attractiveness;
-            }
-            parentWeight = random.Next(0, 1);
-            if (parentWeight >= .5)
-            {
-                child.Age = mom.Age;
-            }
-            else
-            {
-                child.Age = dad.Age;
-            }
-            parentWeight = random.Next(0, 1);
-            if (parentWeight >= .5)
-            {
-                child.MovementBoost = mom.MovementBoost;
-            }
-            else
-            {
-                child.MovementBoost = dad.MovementBoost;
-            }
+
+            //The following attributes are determined by how healthy the parents are
+            child.StoredEnergy = (mom.StoredEnergy + dad.StoredEnergy) / 2;
+            child.MovementBoost = (mom.MovementBoost + dad.MovementBoost) / 2;
+
+
             child.Health = child.dna.MaxHealth;
             return child;
         }

@@ -9,21 +9,22 @@ namespace EvolutionSimulator.Organisms
     public class DNA
     {
         //DNA is determined by the parents and impacts the organisms abilities
-        private float maxHealth;
-        private float lifeExpectancy;
-        private float maxSize;
-        private float maxEnergy;
-        private float defense;
-        private float attack;
-        private float moveStat;
-        private float averageChildren;
+        private float maxHealth = 0;
+        private float lifeExpectancy = 0;
+        private float maxSize = 0;
+        private float maxEnergy = 0;
+        private float defense = 0;
+        private float attack = 0;
+        private float moveStat = 0;
+        private float averageChildren = 0;
         private float intelligence;
 
         //energy collection(how does it eat?)
-        private float chemicalAbsorption;
-        private float photosynthesis;
-        private float digestiveAbility;
-        public DNA()
+        private float chemicalAbsorption = 0;
+        private float photosynthesis = 0;
+        private float digestiveAbility = 0;
+        private float attractiveness = 0;
+        /*public DNA()
         {
             MaxHealth = 0;
             LifeExpectancy = 0;
@@ -37,7 +38,7 @@ namespace EvolutionSimulator.Organisms
             ChemicalAbsorption = 0;
             Photosynthesis = 0;
             DigestiveAbility = 0;
-        }
+        }*/
 
         public float MaxHealth
         {
@@ -49,7 +50,6 @@ namespace EvolutionSimulator.Organisms
             get { return lifeExpectancy; }
             set { lifeExpectancy = value; }
         }
-
 
         public float MaxSize
         {
@@ -85,6 +85,11 @@ namespace EvolutionSimulator.Organisms
         {
             get { return averageChildren; }
             set { averageChildren = value; }
+        }
+        public float Attractiveness
+        {
+            get { return attractiveness; }
+            set { attractiveness = value; }
         }
 
         public float Intelligence
