@@ -24,40 +24,10 @@ namespace EvolutionSimulator
             backgroundWorker.WorkerSupportsCancellation = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (GlobalVariables.firstDay)
-            {
-                //create first, generic creatures
-                int x = 0;
-                while (x < 100)
-                {
-                    //All organisms basically start as primordial soup...
-                    OrganismList.Insert(x, Organism.createLife());
-                    x++;
-                }
-                GlobalVariables.firstDay = false;
-            }
-            int i = 0;
-
-            DayCycleHandler dayCycleHandler = new DayCycleHandler();
-            while (i < 100)
-            {
-                
-                OrganismList = dayCycleHandler.RunDay(OrganismList);
-                i++;
-            }
-            Organism mom = Organism.createLife();            
-            Organism dad = Organism.createLife();
-            dad.dna.MaxHealth = 20;
-            Organism child = ChildCalculations.BabyTime(mom, dad);
-
-            AncestryAnalysis.CompareChildToParents(child, mom, dad);
-        }
-
         private void worldGenButton_Click(object sender, EventArgs e)
         {
             GlobalVariables.world = new World.Map();
+            //XYZ should be either user customizable or determined by the UI dimensions
             GlobalVariables.world.GenerateWorld(201, 201, 100);
         }
 
@@ -67,11 +37,15 @@ namespace EvolutionSimulator
             {
                 if (GlobalVariables.world.pixels.Count == 0)
                 {
+                    //Tried to run before creating a world. Generate a fresh one...
                     GlobalVariables.world.GenerateWorld(201, 201, 100);
                 }
-                if(GlobalVariables.livingOrganisms.Count == 0)
+                if(GlobalVariables.livingOrganisms.Count == 0 || GlobalVariables.firstDay)
                 {
-                    GlobalVariables.livingOrganisms = GlobalVariables.world.SpawnLife();
+                    //Either it is a new run or everything is dead...either way, start fresh
+                    //Set first day variables here...
+                    GlobalVariables.livingOrganisms = GlobalVariables.world.SpawnLife(100);
+                    GlobalVariables.firstDay = false;
                 }
                 backgroundWorker.RunWorkerAsync();
             }
@@ -80,16 +54,19 @@ namespace EvolutionSimulator
                 backgroundWorker.CancelAsync();
             }
         }
+
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
+            DayCycleHandler dayCycleHandler = new DayCycleHandler();
+
             while (!worker.CancellationPending)
             {
                 //Run a day...if it takes too long, have it only run a segment of time.
+                dayCycleHandler.RunDay();
+                Thread.Sleep(250);
                 Console.WriteLine("Running");
-                Thread.Sleep(500);
-
 
             }
         }

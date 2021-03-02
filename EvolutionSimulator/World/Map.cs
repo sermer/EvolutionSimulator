@@ -31,11 +31,36 @@ namespace EvolutionSimulator.World
             maxZ = zDimension;
 
             pixels = GenerateEmptyMap();
-            
-            /*MapPixel pixel = AccessPixel(101, 101);
-            pixel.Type = "O";
+            Random rand = new Random();
 
-            for(int y = 0; y < maxY -1; y++)
+            //Should probably scale features with map dimensions...
+            int featureCount = rand.Next(2, 10);
+            for(int i = 0; i < featureCount - 1; i++)
+            {
+                //Generate lakes
+                int x = rand.Next(maxX);
+                int y = rand.Next(maxY);
+
+                int lakeRadius = rand.Next(2, 10);
+                MapPixel lakeCenter = AccessPixel(x, y);
+                GenerateLake(lakeCenter, lakeRadius);
+            }
+
+            featureCount = rand.Next(4, 8);
+            for (int i = 0; i < featureCount - 1; i++)
+            {
+                //Generate thermal vents
+                int x = rand.Next(maxX);
+                int y = rand.Next(maxY);
+
+                int ventRadius = rand.Next(2, 4);
+                MapPixel ventCenter = AccessPixel(x, y);
+                GenerateVent(ventCenter, ventRadius);
+            }
+
+
+            //"Draws" the map in the console
+            for (int y = 0; y < maxY -1; y++)
             {
                 string line = "";
                 for (int x = 0; x < maxX - 1; x++)
@@ -43,7 +68,7 @@ namespace EvolutionSimulator.World
                     line+=AccessPixel(x, y).Type;
                 }
                 Console.WriteLine(line);
-            }*/
+            }
             //GenerateVent()
         }
 
@@ -63,31 +88,70 @@ namespace EvolutionSimulator.World
 
         public MapPixel AccessPixel(int x, int y)
         {
-            MapPixel pixel = pixels[x + (y * maxX)];
+            if(x < 0 || x >= maxX || y < 0 || y >= maxY)
+            {
+                return null;
+            }
 
-            return pixel;
+            return pixels[x + (y * maxX)];
         }
 
-        public void GenerateLake(MapPixel centerPixel, Map map)
+        public void GenerateLake(MapPixel centerPixel, int lakeRadius)
+        {
+            //Just a square for now...
+            for(int x = centerPixel.X - lakeRadius; x < lakeRadius + centerPixel.X; x++)
+            {
+                if(x < 0 || x >= maxX)
+                {
+                    //Outside of map
+                    continue;
+                }
+                for (int y = centerPixel.Y - lakeRadius; y < lakeRadius + centerPixel.Y; y++)
+                {
+                    if (y < 0 || y >= maxY)
+                    {
+                        //Outside of map
+                        continue;
+                    }
+                    AccessPixel(x, y).Type = "l";
+                }
+            }
+        }
+
+        public void GenerateVent(MapPixel centerPixel, int ventRadius)
+        {
+            //Just a square for now...
+            for (int x = centerPixel.X - ventRadius; x < ventRadius + centerPixel.X; x++)
+            {
+                if (x < 0 || x >= maxX)
+                {
+                    //Outside of map
+                    continue;
+                }
+                for (int y = centerPixel.Y - ventRadius; y < ventRadius + centerPixel.Y; y++)
+                {
+                    if (y < 0 || y >= maxY)
+                    {
+                        //Outside of map
+                        continue;
+                    }
+                    AccessPixel(x, y).Type = "v";
+                }
+            }
+        }
+
+        public void GenerateCliff(MapPixel centerPixel)
         {
 
         }
 
-        public void GenerateVent(MapPixel centerPixel, Map map)
-        {
-
-        }
-
-        public void GenerateCliff(MapPixel centerPixel, Map map)
-        {
-
-        }
-
-        public List<Organism> SpawnLife()
+        public List<Organism> SpawnLife(int spawnCount)
         {
             //Create the initial primordial soup.
             //Should be spawned at a vent and each organism should be able to feed off vents.
             //Starting amount needs to be enough that life always gets a foothold...
+
+
             return new List<Organism>();
         }
     }

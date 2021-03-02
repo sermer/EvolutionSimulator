@@ -8,12 +8,9 @@ namespace EvolutionSimulator
 {
     class DayCycleHandler
     {
-        public List<Organism> RunDay(List<Organism> aliveOrgs)
+        public void RunDay()
         {
             int timeOfDay = 0;
-            double season = EvolutionSimulator.GlobalVariables.season;
-            int day = EvolutionSimulator.GlobalVariables.day;
-            bool seasonWaxing = EvolutionSimulator.GlobalVariables.seasonWaxing;
             string[] timeWindow = new[] { "Dawn", "Day", "Dusk", "Night" };
 
             for (var i = 0; i <= 12; i++)
@@ -41,9 +38,9 @@ namespace EvolutionSimulator
             }
             //Day is over
             timeOfDay = 0;
-            day++;
+            GlobalVariables.day++;
 
-            foreach (Organism org in aliveOrgs)
+            foreach (Organism org in GlobalVariables.livingOrganisms)
             {
                 //Brain.Mutate(org);
                 
@@ -51,7 +48,6 @@ namespace EvolutionSimulator
                 
             }
             DayPassed();
-            return aliveOrgs;
         }
 
         private void DayPassed()
