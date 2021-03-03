@@ -45,7 +45,7 @@
             // 
             // worldGenButton
             // 
-            this.worldGenButton.Location = new System.Drawing.Point(933, 874);
+            this.worldGenButton.Location = new System.Drawing.Point(868, 874);
             this.worldGenButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.worldGenButton.Name = "worldGenButton";
             this.worldGenButton.Size = new System.Drawing.Size(248, 135);
@@ -56,7 +56,7 @@
             // 
             // beginButton
             // 
-            this.beginButton.Location = new System.Drawing.Point(677, 874);
+            this.beginButton.Location = new System.Drawing.Point(538, 874);
             this.beginButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.beginButton.Name = "beginButton";
             this.beginButton.Size = new System.Drawing.Size(248, 135);

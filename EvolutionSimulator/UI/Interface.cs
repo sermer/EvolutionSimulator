@@ -1,4 +1,5 @@
 ﻿using EvolutionSimulator.Analysis;
+using EvolutionSimulator.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +30,10 @@ namespace EvolutionSimulator
             GlobalVariables.world = new World.Map();
             //XYZ should be either user customizable or determined by the UI dimensions
             GlobalVariables.world.GenerateWorld(201, 201, 100);
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EvolutionSim";
+            ImportExport.SavePNG(path);
+            pictureBox1.Image = Image.FromFile(path + "\\map.png");
         }
 
         private void beginButton_Click(object sender, EventArgs e)
