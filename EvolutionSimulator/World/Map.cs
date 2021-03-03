@@ -96,7 +96,7 @@ namespace EvolutionSimulator.World
             return pixels[x + (y * maxX)];
         }
 
-        public void GenerateLake(MapPixel centerPixel, int lakeRadius)
+        private void GenerateLake(MapPixel centerPixel, int lakeRadius)
         {
             //Just a square for now...
             for(int x = centerPixel.X - lakeRadius; x < lakeRadius + centerPixel.X; x++)
@@ -118,7 +118,7 @@ namespace EvolutionSimulator.World
             }
         }
 
-        public void GenerateVent(MapPixel centerPixel, int ventRadius)
+        private void GenerateVent(MapPixel centerPixel, int ventRadius)
         {
             //Just a square for now...
             for (int x = centerPixel.X - ventRadius; x < ventRadius + centerPixel.X; x++)
@@ -138,6 +138,23 @@ namespace EvolutionSimulator.World
                     AccessPixel(x, y).Type = "v";
                 }
             }
+        }
+
+        private void GenerateStream()
+        {
+            //Streams should have a chance to spawn from the edge of a lake and follow a winding path until reaching another stream, another lake, or the edge of the map.
+            //They will need to be generated chunk by chunk and will have a random chance to go straight, turn clockwise, or turn counter-clockwise.
+            //All turns will need to be tracked so that it doesn't look around and connect with itself(>2 turns in any given direction).
+
+            //Will there be a flow? If so, z values would determine overall direction and turns would be limited to 1 against the z direction(no flowing uphill).
+            //Should the stream width be variable? Starting with a default width of 1 or 2 might make this easier...
+
+            //Interactions:
+            //Cliffs - Depending on what I want to do with z values this could have different interactions. If no z values or if the z jumps, the stream would need to immediately turn as to not jump the cliff. 
+            //          if z values are in play, a lower z value on the other side could cause a waterfall.
+            //Vents - Streams should not replace vents but rather go around. Either have the stream go around one side or if the stream width is >=2 it could potentially split and create 2 streams.
+
+
         }
 
         public void GenerateCliff(MapPixel centerPixel)
