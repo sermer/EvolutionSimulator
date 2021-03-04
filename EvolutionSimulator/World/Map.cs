@@ -96,6 +96,20 @@ namespace EvolutionSimulator.World
             return pixels[x + (y * maxX)];
         }
 
+        private void DrawCircle(int x, int y, int r)
+        {
+            double pi = Math.PI;
+            double i, angle, x1, y1;
+
+            for (i = 0; i < 360; i += 0.1)
+            {
+                angle = i;
+                x1 = r * Math.Cos(angle * pi / 180);
+                y1 = r * Math.Sin(angle * pi / 180);
+                //putpixel(x + x1, y + y1);
+            }
+        }
+
         private void GenerateLake(MapPixel centerPixel, int lakeRadius)
         {
             //Just a square for now...
