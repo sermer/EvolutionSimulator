@@ -53,8 +53,8 @@ namespace EvolutionSimulator.UI
 
                 Directory.CreateDirectory(saveDirectory);
 
+                //Need to change map to use run parameters
                 string filename = saveDirectory + "\\map.png";
-
                 b.Save(filename, ImageFormat.Png);
             }
         }

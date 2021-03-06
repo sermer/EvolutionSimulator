@@ -60,7 +60,7 @@ namespace EvolutionSimulator.World
 
 
             //"Draws" the map in the console
-            for (int y = 0; y < maxY -1; y++)
+            /*for (int y = 0; y < maxY -1; y++)
             {
                 string line = "";
                 for (int x = 0; x < maxX - 1; x++)
@@ -68,7 +68,7 @@ namespace EvolutionSimulator.World
                     line+=AccessPixel(x, y).Type;
                 }
                 Console.WriteLine(line);
-            }
+            }*/
             //GenerateVent()
         }
 

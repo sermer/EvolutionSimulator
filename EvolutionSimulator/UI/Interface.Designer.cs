@@ -28,23 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.mapPictureBox = new System.Windows.Forms.PictureBox();
             this.worldGenButton = new System.Windows.Forms.Button();
             this.beginButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // mapPictureBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(35, 32);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1664, 819);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.mapPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapPictureBox.Location = new System.Drawing.Point(35, 32);
+            this.mapPictureBox.Name = "mapPictureBox";
+            this.mapPictureBox.Size = new System.Drawing.Size(1664, 819);
+            this.mapPictureBox.TabIndex = 1;
+            this.mapPictureBox.TabStop = false;
             // 
             // worldGenButton
             // 
+            this.worldGenButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.worldGenButton.Location = new System.Drawing.Point(868, 874);
             this.worldGenButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.worldGenButton.Name = "worldGenButton";
@@ -56,6 +60,7 @@
             // 
             // beginButton
             // 
+            this.beginButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.beginButton.Location = new System.Drawing.Point(538, 874);
             this.beginButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.beginButton.Name = "beginButton";
@@ -67,6 +72,7 @@
             // 
             // loadButton
             // 
+            this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.loadButton.Location = new System.Drawing.Point(1451, 874);
             this.loadButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.loadButton.Name = "loadButton";
@@ -83,17 +89,17 @@
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.beginButton);
             this.Controls.Add(this.worldGenButton);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.mapPictureBox);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Interface";
             this.Text = "Evolution Simulator";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox mapPictureBox;
         private System.Windows.Forms.Button worldGenButton;
         private System.Windows.Forms.Button beginButton;
         private System.Windows.Forms.Button loadButton;

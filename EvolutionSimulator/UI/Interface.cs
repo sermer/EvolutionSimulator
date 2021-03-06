@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,11 +30,13 @@ namespace EvolutionSimulator
         {
             GlobalVariables.world = new World.Map();
             //XYZ should be either user customizable or determined by the UI dimensions
-            GlobalVariables.world.GenerateWorld(201, 201, 100);
+            Size mapSize = mapPictureBox.Size;
+            GlobalVariables.world.GenerateWorld(mapSize.Width, mapSize.Height, 100);
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EvolutionSim";
             ImportExport.SavePNG(path);
-            pictureBox1.Image = Image.FromFile(path + "\\map.png");
+
+            LoadMapImage(path + "\\map.png");
         }
 
         private void beginButton_Click(object sender, EventArgs e)
@@ -73,6 +76,20 @@ namespace EvolutionSimulator
                 Thread.Sleep(250);
                 Console.WriteLine("Running");
 
+            }
+        }
+
+        private void LoadMapImage(string path)
+        {
+            using (var sourceImage = Image.FromFile(path))
+            {
+                var targetImage = new Bitmap(sourceImage.Width, sourceImage.Height,
+                  PixelFormat.Format32bppArgb);
+                using (var canvas = Graphics.FromImage(targetImage))
+                {
+                    canvas.DrawImageUnscaled(sourceImage, 0, 0);
+                }
+                mapPictureBox.Image = targetImage;
             }
         }
     }
