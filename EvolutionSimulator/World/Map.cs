@@ -34,26 +34,29 @@ namespace EvolutionSimulator.World
             Random rand = new Random();
 
             //Should probably scale features with map dimensions...
-            int featureCount = rand.Next(2, 10);
+
+            int pixelCount = maxX * maxY;
+
+            int featureCount = rand.Next(Convert.ToInt32(Math.Pow(pixelCount, .25)), Convert.ToInt32(Math.Pow(pixelCount, .33)));
             for(int i = 0; i < featureCount - 1; i++)
             {
                 //Generate lakes
                 int x = rand.Next(maxX);
                 int y = rand.Next(maxY);
 
-                int lakeRadius = rand.Next(2, 10);
+                int lakeRadius = rand.Next(rand.Next(Convert.ToInt32(Math.Pow(pixelCount, .1)), Convert.ToInt32(Math.Pow(pixelCount, .33))));
                 MapPixel lakeCenter = AccessPixel(x, y);
                 GenerateLake(lakeCenter, lakeRadius);
             }
 
-            featureCount = rand.Next(4, 8);
+            featureCount = rand.Next(Convert.ToInt32(Math.Pow(pixelCount, .25)), Convert.ToInt32(Math.Pow(pixelCount, .33)));
             for (int i = 0; i < featureCount - 1; i++)
             {
                 //Generate thermal vents
                 int x = rand.Next(maxX);
                 int y = rand.Next(maxY);
 
-                int ventRadius = rand.Next(2, 4);
+                int ventRadius = rand.Next(2, 5);
                 MapPixel ventCenter = AccessPixel(x, y);
                 GenerateVent(ventCenter, ventRadius);
             }
@@ -96,26 +99,74 @@ namespace EvolutionSimulator.World
             return pixels[x + (y * maxX)];
         }
 
-        private void DrawCircle(int x, int y, int r)
+        private List<string> DrawCircle(int x, int y, int r)
         {
+            //Creates a empty circle with a center at x, y with a radius of r
             double pi = Math.PI;
-            double i, angle, x1, y1;
 
-            for (i = 0; i < 360; i += 0.1)
+            //Each item is "x_y"
+            List<string> pixelList = new List<string>();
+
+            for (double i = 0; i < 360; i += 0.1)
             {
-                angle = i;
-                x1 = r * Math.Cos(angle * pi / 180);
-                y1 = r * Math.Sin(angle * pi / 180);
-                //putpixel(x + x1, y + y1);
+                double angle = i;
+                double x1 = r * Math.Cos(angle * pi / 180);
+                double y1 = r * Math.Sin(angle * pi / 180);
+                string newPixel = string.Concat(Convert.ToInt32(x + x1), "_", Convert.ToInt32(y + y1));
+                if (!pixelList.Contains(newPixel))
+                {
+                    pixelList.Add(newPixel);
+                }
             }
+
+            return pixelList;
         }
 
         private void GenerateLake(MapPixel centerPixel, int lakeRadius)
         {
-            //Just a square for now...
-            for(int x = centerPixel.X - lakeRadius; x < lakeRadius + centerPixel.X; x++)
+            List<string> pixelList = DrawCircle(centerPixel.X, centerPixel.Y, lakeRadius);
+
+            Dictionary<int, CircleBounds> circleBoundsDict = new Dictionary<int, CircleBounds>();
+
+            foreach (string pixel in pixelList)
             {
-                if(x < 0 || x >= maxX)
+                string[] xy = pixel.Split('_');
+                int x = Convert.ToInt32(xy[0]);
+                int y = Convert.ToInt32(xy[1]);
+
+                if (!circleBoundsDict.ContainsKey(y))
+                {
+                    circleBoundsDict[y] = new CircleBounds(x);
+                }
+                else
+                {
+                    CircleBounds cb = circleBoundsDict[y];
+                    if (x < cb.MinX)
+                    {
+                        cb.MinX = x;
+                    }
+                    else if(x > cb.MaxX)
+                    {
+                        cb.MaxX = x;
+                    }
+                }
+
+                if (x < 0 || x >= maxX)
+                {
+                    //Outside of map
+                    continue;
+                }
+                if (y < 0 || y >= maxY)
+                {
+                    //Outside of map
+                    continue;
+                }
+                AccessPixel(x, y).Type = "l";
+            }
+
+            for (int x = centerPixel.X - lakeRadius; x < lakeRadius + centerPixel.X; x++)
+            {
+                if (x < 0 || x >= maxX)
                 {
                     //Outside of map
                     continue;
@@ -127,7 +178,11 @@ namespace EvolutionSimulator.World
                         //Outside of map
                         continue;
                     }
-                    AccessPixel(x, y).Type = "l";
+
+                    if(x > circleBoundsDict[y].MinX && x < circleBoundsDict[y].MaxX) 
+                    {
+                        AccessPixel(x, y).Type = "l";
+                    }
                 }
             }
         }
@@ -204,4 +259,17 @@ namespace EvolutionSimulator.World
             TypeStrength = typeStrength;
         }
     }
+
+    public class CircleBounds
+    {
+        //The bounds of each line(y) of the drawn circle
+        public int MinX { get; set; }
+        public int MaxX { get; set; }
+        public CircleBounds(int x)
+        {
+            MinX = x;
+            MaxX = x;
+        }
+    }
+
 }
