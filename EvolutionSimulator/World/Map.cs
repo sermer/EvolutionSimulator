@@ -49,7 +49,8 @@ namespace EvolutionSimulator.World
                 GenerateLake(lakeCenter, lakeRadius);
             }
 
-            featureCount = rand.Next(Convert.ToInt32(Math.Pow(pixelCount, .25)), Convert.ToInt32(Math.Pow(pixelCount, .33)));
+            GlobalVariables.firstVentLocation = null; //resets each world generation
+            featureCount = rand.Next(Convert.ToInt32(Math.Pow(pixelCount, .3)), Convert.ToInt32(Math.Pow(pixelCount, .4)));
             for (int i = 0; i < featureCount - 1; i++)
             {
                 //Generate thermal vents
@@ -58,21 +59,14 @@ namespace EvolutionSimulator.World
 
                 int ventRadius = rand.Next(2, 5);
                 MapPixel ventCenter = AccessPixel(x, y);
+                if(GlobalVariables.firstVentLocation == null)
+                {
+                    //Set spawn location and guarentee a larger vent
+                    GlobalVariables.firstVentLocation = ventCenter;
+                    ventRadius = 5;
+                }
                 GenerateVent(ventCenter, ventRadius);
             }
-
-
-            //"Draws" the map in the console
-            /*for (int y = 0; y < maxY -1; y++)
-            {
-                string line = "";
-                for (int x = 0; x < maxX - 1; x++)
-                {
-                    line+=AccessPixel(x, y).Type;
-                }
-                Console.WriteLine(line);
-            }*/
-            //GenerateVent()
         }
 
         public List<MapPixel> GenerateEmptyMap()
@@ -236,9 +230,12 @@ namespace EvolutionSimulator.World
             //Create the initial primordial soup.
             //Should be spawned at a vent and each organism should be able to feed off vents.
             //Starting amount needs to be enough that life always gets a foothold...
-
-
-            return new List<Organism>();
+            List<Organism> primordialSoup = new List<Organism>();
+            for(int i = 0; i < spawnCount; i++)
+            {
+                primordialSoup.Add(Organism.CreateLife());
+            }
+            return primordialSoup;
         }
     }
 
@@ -249,6 +246,8 @@ namespace EvolutionSimulator.World
         public int Z { get;}
         public string Type { get; set; }
         public int TypeStrength { get; set; } //from 0-100. Used for things like Vents
+
+        public List<Organism> PixelContents = new List<Organism>(); //Should orgs in a pixel be tracked here? Would make interactions easier...
 
         public MapPixel(int x, int y, int z = 0, string type = "r", int typeStrength = 100)
         {

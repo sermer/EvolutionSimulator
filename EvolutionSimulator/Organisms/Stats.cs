@@ -9,47 +9,54 @@ namespace EvolutionSimulator.Organisms
     public class Stats
     {
         //changeable via actions(individual life)
-        private float health;
-        private float size;
-        private float storedEnergy;
-        private float age;
+        private double health;
+        private double size;
+        private double storedEnergy;
+        private double age;
+        private double bmr;
 
         //based off lifelong overall health
-        private float attractiveness; //High stats make it more attractive
-        private float movementModifier; //Low stats = slow
+        private double attractiveness; //High stats make it more attractive
+        private double movementModifier; //Low stats = slow
 
-        public float Health
+        public double Health
         {
             get { return health; }
             set { health = value; }
         }
 
-        public float Size
+        public double Size
         {
             get { return size; }
             set { size = value; }
         }
 
-        public float StoredEnergy
+        public double StoredEnergy
         {
             get { return storedEnergy; }
             set { storedEnergy = value; }
         }
 
-        public float Age
+        public double BMR
+        {
+            get { return bmr; }
+            set { bmr = value; }
+        }
+
+        public double Age
         {
             get { return age; }
             set { age = value; }
         }
 
         //based off lifelong overall health
-        public float Attractiveness
+        public double Attractiveness
         {
             get { return attractiveness; }
             set { attractiveness = value; }
         }
 
-        public float MovementBoost
+        public double MovementBoost
         {
             get { return movementModifier; }
             set { movementModifier = value; }

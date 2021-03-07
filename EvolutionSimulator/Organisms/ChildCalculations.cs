@@ -17,21 +17,21 @@ namespace EvolutionSimulator
             float parentWeight;
             Random random = new Random();
 
-            foreach(PropertyInfo property in child.dna.GetType().GetProperties())
+            foreach(PropertyInfo property in child.DNA.GetType().GetProperties())
             {
                 try
                 {
                     //50-50 chance genes come from each parent.
                     parentWeight = random.Next(0, 2);
 
-                    PropertyInfo pi = child.dna.GetType().GetProperty(property.Name);
+                    PropertyInfo pi = child.DNA.GetType().GetProperty(property.Name);
                     if (parentWeight >= 1)
                     {
-                        pi.SetValue(child.dna, dad.dna.GetType().GetProperty(property.Name).GetValue(dad.dna));
+                        pi.SetValue(child.DNA, dad.DNA.GetType().GetProperty(property.Name).GetValue(dad.DNA));
                     }
                     else
                     {
-                        pi.SetValue(child.dna, mom.dna.GetType().GetProperty(property.Name).GetValue(mom.dna));
+                        pi.SetValue(child.DNA, mom.DNA.GetType().GetProperty(property.Name).GetValue(mom.DNA));
                     }
                 }
                 catch
@@ -41,11 +41,11 @@ namespace EvolutionSimulator
             }
 
             //The following attributes are determined by how healthy the parents are
-            child.stats.StoredEnergy = (mom.stats.StoredEnergy + dad.stats.StoredEnergy) / 2;
-            child.stats.MovementBoost = (mom.stats.MovementBoost + dad.stats.MovementBoost) / 2;
+            child.Stats.StoredEnergy = (mom.Stats.StoredEnergy + dad.Stats.StoredEnergy) / 2;
+            child.Stats.MovementBoost = (mom.Stats.MovementBoost + dad.Stats.MovementBoost) / 2;
 
 
-            child.stats.Health = child.dna.MaxHealth;
+            child.Stats.Health = child.DNA.MaxHealth;
             return child;
         }
     }

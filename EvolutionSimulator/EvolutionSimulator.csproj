@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Analysis\AncestryAnalysis.cs" />
     <Compile Include="Organisms\ChildCalculations.cs" />
-    <Compile Include="Organisms\Brain.cs" />
     <Compile Include="UI\ImportExport.cs" />
     <Compile Include="World\GlobalVariables.cs" />
     <Compile Include="Organisms\EnergyHandler.cs" />

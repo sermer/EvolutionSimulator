@@ -11,54 +11,61 @@ namespace EvolutionSimulator
         public void RunDay()
         {
             int timeOfDay = 0;
-            string[] timeWindow = new[] { "Dawn", "Day", "Dusk", "Night" };
+
+            Random rand = new Random();
 
             for (var i = 0; i <= 12; i++)
             {
-                //Begin Day, 12 "hours", day night cycle determined by season
-                
-
-                /*if (i < 9 - season)
+                if (i < 2)
                 {
-                    //daytime
-                    foreach(Organism org in aliveOrgs)
-                    {
-                        Brain.Move(org);
-                    }
+                    GlobalVariables.timeOfDay = "Dawn";
+                }
+                else if (i + GlobalVariables.season < 8)
+                {
+                    GlobalVariables.timeOfDay = "Day";
+                }
+                else if (i + GlobalVariables.season < 10)
+                {
+                    GlobalVariables.timeOfDay = "Dusk";
                 }
                 else
                 {
-                    //nighttime
-                    foreach (Organism org in aliveOrgs)
+                    GlobalVariables.timeOfDay = "Night";
+                }
+
+                foreach (Organism org in GlobalVariables.livingOrganisms.ToList())
+                {
+                    if (!org.isAlive)
                     {
-                        Brain.Move(org);
+                        continue;
                     }
-                }*/
+
+                    org.InteractWithEnvironment();
+
+                    if (rand.Next(0, 100) < 1)
+                    {
+                        //small chance of DNA mutating each time period
+                        org.Mutate();
+                    }
+                }
+
+                //Begin Day, 12 "hours", day night cycle determined by season
                 timeOfDay++;
             }
             //Day is over
             timeOfDay = 0;
             GlobalVariables.day++;
-
-            foreach (Organism org in GlobalVariables.livingOrganisms)
-            {
-                //Brain.Mutate(org);
-                
-               //Console.WriteLine(day + " " + org.dna.MaxHealth);
-                
-            }
             DayPassed();
         }
 
         private void DayPassed()
         {
-            if (GlobalVariables.seasonWaxing)
+            if (GlobalVariables.seasonWaning)
             {
-                //Actually waning but whatever...
                 GlobalVariables.season += 0.1;
                 if (GlobalVariables.season >= 2.4)
                 {
-                    GlobalVariables.seasonWaxing = false;
+                    GlobalVariables.seasonWaning = false;
                 }
             }
             else
@@ -66,7 +73,7 @@ namespace EvolutionSimulator
                 GlobalVariables.season -= 0.1;
                 if (GlobalVariables.season <= -2.4)
                 {
-                    GlobalVariables.seasonWaxing = true;
+                    GlobalVariables.seasonWaning = true;
                 }
             }
         }

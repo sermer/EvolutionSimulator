@@ -15,44 +15,37 @@ namespace EvolutionSimulator
 {
     public partial class Interface : Form
     {
-        List<Organism> OrganismList = new List<Organism>();
         BackgroundWorker backgroundWorker;
         public Interface()
         {
             InitializeComponent();
             backgroundWorker = new BackgroundWorker();
 
-            backgroundWorker.DoWork += backgroundWorker_DoWork;
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
             backgroundWorker.WorkerSupportsCancellation = true;
         }
 
-        private void worldGenButton_Click(object sender, EventArgs e)
+        private void WorldGenButton_Click(object sender, EventArgs e)
         {
-            GlobalVariables.world = new World.Map();
-            //XYZ should be either user customizable or determined by the UI dimensions
-            Size mapSize = mapPictureBox.Size;
-            GlobalVariables.world.GenerateWorld(mapSize.Width, mapSize.Height, 100);
-
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EvolutionSim";
-            ImportExport.SavePNG(path);
-
-            LoadMapImage(path + "\\map.png");
+            GenerateWorld();
         }
 
-        private void beginButton_Click(object sender, EventArgs e)
+        private void BeginButton_Click(object sender, EventArgs e)
         {
             if (!backgroundWorker.IsBusy)
             {
                 if (GlobalVariables.world.pixels.Count == 0)
                 {
                     //Tried to run before creating a world. Generate a fresh one...
-                    GlobalVariables.world.GenerateWorld(201, 201, 100);
+                    statusLabel.Invoke((MethodInvoker)delegate { statusLabel.Text = "Generating world"; });
+                    GenerateWorld();
                 }
                 if(GlobalVariables.livingOrganisms.Count == 0 || GlobalVariables.firstDay)
                 {
                     //Either it is a new run or everything is dead...either way, start fresh
                     //Set first day variables here...
-                    GlobalVariables.livingOrganisms = GlobalVariables.world.SpawnLife(100);
+                    statusLabel.Invoke((MethodInvoker)delegate { statusLabel.Text = "Spawning life"; });
+                    GlobalVariables.livingOrganisms = GlobalVariables.world.SpawnLife(248);
                     GlobalVariables.firstDay = false;
                 }
                 backgroundWorker.RunWorkerAsync();
@@ -63,20 +56,37 @@ namespace EvolutionSimulator
             }
         }
 
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
             DayCycleHandler dayCycleHandler = new DayCycleHandler();
 
-            while (!worker.CancellationPending)
+            Thread.Sleep(100);
+
+            while (!worker.CancellationPending && GlobalVariables.livingOrganisms.Count > 0)
             {
                 //Run a day...if it takes too long, have it only run a segment of time.
                 dayCycleHandler.RunDay();
-                Thread.Sleep(250);
-                Console.WriteLine("Running");
-
+                statusLabel.Invoke((MethodInvoker)delegate { statusLabel.Text = string.Concat(GlobalVariables.livingOrganisms.Count, " organisms are alive.    Day ", GlobalVariables.day); });
             }
+
+            if(GlobalVariables.livingOrganisms.Count == 0)
+            {
+                statusLabel.Invoke((MethodInvoker)delegate { statusLabel.Text = string.Concat("Nothing but death and decay remains. The last organism died on day ", GlobalVariables.day); });
+            }
+        }
+
+        private void GenerateWorld()
+        {
+            GlobalVariables.world = new World.Map();
+            Size mapSize = mapPictureBox.Size;
+            GlobalVariables.world.GenerateWorld(mapSize.Width, mapSize.Height, 100);
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EvolutionSim";
+            ImportExport.SavePNG(path);
+
+            LoadMapImage(path + "\\map.png");
         }
 
         private void LoadMapImage(string path)

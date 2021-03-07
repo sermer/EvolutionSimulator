@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EvolutionSimulator.World;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,11 @@ namespace EvolutionSimulator
     {
         public static int day;
         public static double season;
+        public static string timeOfDay;
         public static bool firstDay = true;
-        public static bool seasonWaxing = true;
+        public static bool seasonWaning = true;
+
+        public static MapPixel firstVentLocation;
 
         public static List<Organism> livingOrganisms = new List<Organism>();
 
