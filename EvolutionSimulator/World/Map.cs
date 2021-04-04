@@ -12,7 +12,7 @@ namespace EvolutionSimulator.World
         public int maxY;
         public int maxZ;
         public List<MapPixel> pixels = new List<MapPixel>();
-
+        private string[] SupportedPixelTypes = { "r", "l", "v", "s" };
         public void GenerateWorld(int xDimension, int yDimension, int zDimension)
         {
             /*
@@ -91,6 +91,26 @@ namespace EvolutionSimulator.World
             }
 
             return pixels[x + (y * maxX)];
+        }
+
+        public bool SetMapPixel(int x, int y, string type)
+        {
+            if (!SupportedPixelTypes.Contains(type))
+            {
+                return false;
+            }
+            AccessPixel(x, y).Type = type;
+            return true;
+        }
+
+        public bool SetMapPixel(MapPixel pixel, string type)
+        {
+            if (!SupportedPixelTypes.Contains(type))
+            {
+                return false;
+            }
+            pixel.Type = type;
+            return true;
         }
 
         private List<string> DrawCircle(int x, int y, int r)

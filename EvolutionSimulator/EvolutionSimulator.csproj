@@ -63,6 +63,7 @@
     <Compile Include="Organisms\Stats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="World\Map.cs" />
+    <Compile Include="World\Streams.cs" />
     <EmbeddedResource Include="UI\Interface.resx">
       <DependentUpon>Interface.cs</DependentUpon>
     </EmbeddedResource>
